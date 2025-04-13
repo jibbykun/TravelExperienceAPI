@@ -39,35 +39,39 @@ You can run the tests by going to the Test tab, and selecting Run All Tests.
 - **Request Body**: The request body should be a JSON object containing the trip and its related activity details:
 ```json
 {
-    "userId": 1,
-    "title": "France",
-    "startDate": "2025-05-01T00:00:00",
-    "endDate": "2025-05-10T00:00:00",
-    "activities": [
-        {
-            "destinationId": 1,
-            "duration": 5,
-            "cost": 100
-        }
-    ]
+  "userId": 1,
+  "title": "France",
+  "startDate": "2025-04-13T18:25:15.017Z",
+  "endDate": "2025-04-13T18:25:15.017Z",
+  "activities": [
+    {
+      "destinationId": 1,
+      "duration": 5,
+      "cost": 4
+    }
+  ]
 }
 ```
 
 - **Response**: Returns the created trip with its ID and total cost:
 ```json
 {
-    "id": "sampleguid-1234-5678-9101-112233445566",
-    "title": "France",
+  "trip": {
+    "tripId": "55a83cb6-47a3-4fa7-bf6f-577fadc2d42e",
     "userId": 1,
-    "startDate": "2025-05-01T00:00:00",
-    "endDate": "2025-05-10T00:00:00",
-    "totalCost": 500.0,
-    "activities": [
-        {
-            "destinationId": 1,
-            "duration": 5,
-            "cost": 100
-        }
-    ]
+    "title": "France",
+    "startDate": "2025-04-13T18:25:15.017Z",
+    "endDate": "2025-04-13T18:25:15.017Z",
+    "totalCost": 4
+  },
+  "activities": [
+    {
+      "activityId": "96262c96-fe79-4b49-a96b-da93c9ae3eb4",
+      "tripId": "55a83cb6-47a3-4fa7-bf6f-577fadc2d42e",
+      "destinationId": 1,
+      "duration": 5,
+      "cost": 4
+    }
+  ]
 }
 ```
