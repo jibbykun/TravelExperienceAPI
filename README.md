@@ -12,6 +12,10 @@ This project implements a backend service for managing travel experiences, where
 - MongoDB was chosen for its flexibility in storing documents and handling dynamic schemas.
 - The validation service was implemented to ensure that the trip data received is complete and correct before storing it in the database.
 
+## Assumptions
+- The API is intended to handle only basic operations related to trip creation (e.g., validation and storage of trips) as requested.
+- Many aspects of the solution have been simplified and can be worked upon when implementing the full version (e.g. Error Handling, Tests, User Table, full set of CRUD operations). 
+
 ## Prerequisites
 
 You'll need the following tools installed in order to run the project locally:
