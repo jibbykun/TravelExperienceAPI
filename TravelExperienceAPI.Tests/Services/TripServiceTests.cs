@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Diagnostics;
 using MongoDB.Driver;
 using TravelExperienceAPI.Interfaces;
 using TravelExperienceAPI.Services;
@@ -18,25 +17,25 @@ namespace TravelExperienceAPI.Tests.Services
     {
         private readonly Mock<IMongoDatabase> _mockDatabase;
         private readonly Mock<IMongoCollection<Trip>> _mockTripCollection;
-        private readonly Mock<IMongoCollection<Models.Database.Activity>> _mockActivitiesCollection;
+        private readonly Mock<IMongoCollection<Activity>> _mockActivitiesCollection;
         private readonly TripService _tripService;
 
         public TripServiceTests()
         {
             _mockTripCollection = new Mock<IMongoCollection<Trip>>();
-            _mockActivitiesCollection = new Mock<IMongoCollection<Models.Database.Activity>>();
+            _mockActivitiesCollection = new Mock<IMongoCollection<Activity>>();
 
             _mockTripCollection.Setup(x => x.InsertOneAsync(It.IsAny<Trip>(), null, default))
                 .Returns(Task.CompletedTask);
 
-            _mockActivitiesCollection.Setup(x => x.InsertOneAsync(It.IsAny<Models.Database.Activity>(), null, default))
+            _mockActivitiesCollection.Setup(x => x.InsertOneAsync(It.IsAny<Activity>(), null, default))
                 .Returns(Task.CompletedTask);
 
             _mockDatabase = new Mock<IMongoDatabase>();
             _mockDatabase.Setup(x => x.GetCollection<Trip>("Trips", null))
                 .Returns(_mockTripCollection.Object);
 
-            _mockDatabase.Setup(x => x.GetCollection<Models.Database.Activity>("Activities", null))
+            _mockDatabase.Setup(x => x.GetCollection<Activity>("Activities", null))
                 .Returns(_mockActivitiesCollection.Object);
 
             _tripService = new TripService(_mockDatabase.Object, new ValidationService());
@@ -68,7 +67,7 @@ namespace TravelExperienceAPI.Tests.Services
             Assert.Equal(150, result.Trip.TotalCost);
             Assert.Equal(2, result.Activities.Count);
             _mockTripCollection.Verify(x => x.InsertOneAsync(It.IsAny<Trip>(), null, default), Times.Once);
-            _mockActivitiesCollection.Verify(x => x.InsertOneAsync(It.IsAny<Models.Database.Activity>(), null, default), Times.Exactly(2)); // Ensure activities are inserted
+            _mockActivitiesCollection.Verify(x => x.InsertOneAsync(It.IsAny<Activity>(), null, default), Times.Exactly(2)); // Ensure activities are inserted
         }
 
         [Fact]
@@ -202,7 +201,7 @@ namespace TravelExperienceAPI.Tests.Services
             var result = await _tripService.CreateTripAsync(request);
 
             // Assert
-            _mockActivitiesCollection.Verify(x => x.InsertOneAsync(It.IsAny<Models.Database.Activity>(), null, default), Times.Exactly(2));
+            _mockActivitiesCollection.Verify(x => x.InsertOneAsync(It.IsAny<Activity>(), null, default), Times.Exactly(2));
         }
 
         [Fact]
